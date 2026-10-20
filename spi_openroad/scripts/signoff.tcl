@@ -42,7 +42,7 @@ report_tns >> $f_wns
 report_worst_slack -max >> $f_wns
 report_worst_slack -min >> $f_wns
 
-report_design_area >> $f_area
+report_design_area
 
 set cells [get_cells *]
 set num_instances [llength $cells]
