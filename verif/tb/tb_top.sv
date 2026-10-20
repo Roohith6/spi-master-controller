@@ -119,8 +119,8 @@ module tb_top;
 
     // Set CTRL: char_len = 8, Tx on posedge (tx_neg=0), Rx on negedge (rx_neg=1), ASS = 1, IE = 1, GO = 1
     // Bit 13: ASS=1, Bit 12: IE=1, Bit 11: LSB=0, Bit 10: Tx_neg=0, Bit 9: Rx_neg=1, Bit 8: GO=1, Bits 6:0: char_len=8
-    // 0x3208
-    wb_bus.write(ADDR_CTRL, 32'h0000_3208);
+    // 0x3308 (bit 8 = 1 for GO)
+    wb_bus.write(ADDR_CTRL, 32'h0000_3308);
 
     // Wait for transfer completion (poll GO bit or wait interrupt)
     do begin
@@ -144,8 +144,8 @@ module tb_top;
 
     scb.add_expected_miso(128'h0000_0000_0000_0000_0000_0000_DEAD_BEEF);
 
-    // CTRL: char_len = 32 (7'd32 = 7'h20), ASS=1, IE=1, Tx_neg=0, Rx_neg=1, GO=1 -> 0x3220
-    wb_bus.write(ADDR_CTRL, 32'h0000_3220);
+    // CTRL: char_len = 32 (7'd32 = 7'h20), ASS=1, IE=1, Tx_neg=0, Rx_neg=1, GO=1 -> 0x3320
+    wb_bus.write(ADDR_CTRL, 32'h0000_3320);
 
     do begin
       repeat(10) @(posedge wb_clk);
@@ -175,8 +175,8 @@ module tb_top;
 
     scb.add_expected_miso({32'hDDEE_FF00, 32'h99AA_BBCC, 32'h5566_7788, 32'h1122_3344});
 
-    // CTRL: char_len = 0 (means 128 in 128-bit mode), ASS=1, IE=1, Tx_neg=0, Rx_neg=1, GO=1 -> 0x3200
-    wb_bus.write(ADDR_CTRL, 32'h0000_3200);
+    // CTRL: char_len = 0 (means 128 in 128-bit mode), ASS=1, IE=1, Tx_neg=0, Rx_neg=1, GO=1 -> 0x3300
+    wb_bus.write(ADDR_CTRL, 32'h0000_3300);
 
     // Wait for transfer completion by polling GO bit
     $display("[TB] Transfer in progress... Polling GO bit...");
