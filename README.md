@@ -91,11 +91,27 @@ The verification environment includes bus functional models (BFMs) and a self-ch
 =================================================
 ```
 
+### 📈 GTKWave Simulation Waveforms
+
+#### 1. 8-Bit SPI Transmission (`0xA5`)
+![8-Bit SPI Waveform](docs/images/spi_8bit_wave.png)
+*Shows `sclk_pad_o` serial clock generation, `mosi_pad_o` streaming binary `10100101` (`0xA5`), and active-low slave select (`ss_pad_o[0] = 0`).*
+
+#### 2. 32-Bit Multi-Byte Transfer (`0xDEADBEEF`)
+![32-Bit SPI Waveform](docs/images/spi_32bit_wave.png)
+*Shows Wishbone loading `0xDEADBEEF`, selecting slave 1 (`ss_pad_o = FFFFFFFD`), and clocking 32 serial bits.*
+
+#### 3. 128-Bit Full Transaction (`0xDDEEFF00_99AABBCC_55667788_11223344`)
+![128-Bit SPI Waveform](docs/images/spi_128bit_wave.png)
+*Shows all four 32-bit words loaded into TX registers, selecting slave 2 (`ss_pad_o = FFFFFFFB`), and launching the 128-bit frame.*
+
 ---
 
 ## 📁 Repository Structure
 
 ```
+├── docs/                        # Documentation & Waveform Assets
+│   └── images/                  # GTKWave simulation screenshots
 ├── RTL/                         # Original monolithic reference
 ├── spi_openroad/                # ASIC Physical Design Directory
 │   ├── rtl/                     # Synthesizable modular RTL
