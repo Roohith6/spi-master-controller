@@ -50,6 +50,10 @@ GDSII Layout ◄── KLayout Streamout ◄── Routing (TritonRoute) ◄─�
 | **Total Via Count** | Multi-layer interconnect | **20,525 vias** | Met |
 | **Final GDSII Layout** | Production stream | **`spi_top.gds` (2.63 MB)** | Streamed via KLayout |
 
+### 🔬 Physical Silicon Layout (Nangate 45nm GDSII)
+![SPI Master Controller 45nm GDSII Layout](docs/images/spi_layout_gds.png)
+*High-resolution layout rendering of `spi_top.gds` ($101.54\ \mu m \times 101.54\ \mu m$) generated via KLayout with FreePDK45 layer properties.*
+
 ---
 
 ## 📊 Comparison: OpenROAD vs. Internship Qflow Implementation
