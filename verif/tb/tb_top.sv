@@ -197,6 +197,9 @@ module tb_top;
 
   // 7. Main simulation execution
   initial begin
+    $dumpfile("spi_tb.vcd");
+    $dumpvars(0, tb_top);
+
     reset_sequence();
     test_registers();
     test_8bit_transfer();
