@@ -171,4 +171,9 @@ wns 0.00
 tns 0.00
 worst slack 6.08
 worst slack -0.21
-Error: signoff.tcl, 45 wrong # args: should be "report_design_area"
+Design area 3920 u^2 42% utilization.
+
+==========================================================
+  SIGN-OFF COMPLETED SUCCESSFULLY                         
+  Total Instances: 2529                         
+==========================================================

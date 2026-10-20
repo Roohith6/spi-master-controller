@@ -1,1 +1,5 @@
-=== WNS / TNS SUMMARY ===
+=== STATIC TIMING ANALYSIS SIGN-OFF SUMMARY ===
+Setup Worst Negative Slack (WNS):  0.00 ns
+Setup Total Negative Slack (TNS):  0.00 ns
+Worst Setup Slack:                 6.08 ns (MET)
+Worst Hold Slack:                  -0.21 ns
