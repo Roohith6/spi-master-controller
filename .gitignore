@@ -1,0 +1,23 @@
+# Simulation binaries & waveform dumps
+sim_spi
+*.vcd
+*.vpd
+*.fsdb
+*.wlf
+
+# Python cache & virtual environments
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Temporary and backup files
+*.bak
+*.tmp
+*~
+
+# OS & IDE metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
