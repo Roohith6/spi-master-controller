@@ -1,0 +1,11 @@
+create_clock -name clk -period 5 [get_ports clk]
+set_clock_transition -rise 0.1 [get_clocks clk]
+set_clock_transition -fall 0.1 [get_clocks clk]
+set_clock_uncertainty 0.01 [get_ports clk]
+set_input_delay -max 0.01 [get_ports {a b rst}] -clock [get_clocks clk]
+set_output_delay -max 0.01 [get_ports {sum carry}] -clock [get_clocks clk]
+
+group_path -name I2R -from [all_inputs] -to [all_registers]
+group_path -name R2O -from [all_registers] -to [all_outputs]
+group_path -name R2R -from [all_registers] -to [all_registers]
+group_path -name I2O -from [all_inputs] -to [all_outputs]

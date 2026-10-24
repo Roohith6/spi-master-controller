@@ -1,11 +1,14 @@
 # Wishbone SPI Master Controller: ASIC Implementation & Verification
 
 [![Verification](https://img.shields.io/badge/SystemVerilog_Verification-Passing_(5%2F5)-brightgreen.svg)]()
-[![ASIC Flow](https://img.shields.io/badge/OpenROAD-Nangate_45nm-blue.svg)]()
+[![OpenROAD Flow](https://img.shields.io/badge/OpenROAD-Nangate_45nm-blue.svg)]()
+[![Cadence Flow](https://img.shields.io/badge/Cadence_Flow-90nm_Signoff-red.svg)](docs/CADENCE_REPORT.md)
 [![DRC Clean](https://img.shields.io/badge/DRC_Violations-0-success.svg)]()
 [![Target Clock](https://img.shields.io/badge/Clock_Target-100_MHz_(Met)-orange.svg)]()
 
-A complete, production-grade ASIC physical design and functional verification environment for a **Wishbone-compliant SPI Master Controller** (`spi_top`), implemented on the **Nangate 45nm Open Cell Library** using **OpenROAD** and verified with **SystemVerilog**.
+A complete, production-grade ASIC physical design and functional verification environment for a **Wishbone-compliant SPI Master Controller** (`spi_top`), implemented across both **Cadence Tool Suite (90nm)** and **OpenROAD (Nangate 45nm)** and verified with **SystemVerilog**.
+
+> 📖 **Full Cadence Sign-Off Report:** For the comprehensive Cadence report with all waveform, synthesis, equivalence (LEC), and physical layout screenshots, see **[Cadence Implementation Report](docs/CADENCE_REPORT.md)**.
 
 ---
 
@@ -56,17 +59,19 @@ GDSII Layout ◄── KLayout Streamout ◄── Routing (TritonRoute) ◄─�
 
 ---
 
-## 📊 Comparison: OpenROAD vs. Internship Qflow Implementation
+## 📊 Multi-EDA Implementation Comparison (Qflow vs. Cadence vs. OpenROAD)
 
-| Feature / Metric | Qflow Flow (Internship) | OpenROAD Flow (Current Project) | Engineering Rationale |
-| :--- | :--- | :--- | :--- |
-| **Technology Node** | 180nm / 350nm (OSU / SCMOS) | **Nangate 45nm Open Cell** | Modern sub-micron technology with realistic parasitics. |
-| **Tool Architecture** | Chained standalone tools (`Graywolf`, `Qrouter`, `Magic`) | **Unified OpenDB C++ Architecture** (`Yosys`, `OpenROAD`, `KLayout`) | Eliminates intermediate file conversion overhead and routing mismatch. |
-| **Core Cell Area** | $\approx 50,000 - 120,000\ \mu m^2$ | **$3,920\ \mu m^2$** | **$\approx 15\times - 30\times$ area reduction** due to 45nm scaling. |
-| **Clock Frequency** | $20 - 50\text{ MHz}$ | **$100\text{ MHz}$ target ($255.1\text{ MHz}$ max)** | **$\approx 5\times - 10\times$ throughput boost** with sub-nanosecond cell propagation. |
-| **Clock Tree Synthesis** | Scripted buffer trees or skipped | **TritonCTS** automated H-tree balancing | Strict clock skew and slew minimization. |
-| **Detail Routing** | Qrouter (grid-based maze router) | **TritonRoute** (industrial-grade router) | Multi-threading, multi-corner DRC checking, zero violations. |
-| **Timing Closure** | External post-route STA | **OpenSTA** embedded natively | Continuous parasitic-aware incremental timing optimization. |
+| Feature / Metric | Qflow Flow (Internship) | Cadence Tool Suite (Industrial) | OpenROAD Flow (Current Project) | Engineering Rationale |
+| :--- | :--- | :--- | :--- | :--- |
+| **Technology Node** | 180nm / 350nm (OSU / SCMOS) | **Generic 90nm (`typical.lib`)** | **Nangate 45nm Open Cell** | Progression from legacy submicron to modern deep-submicron. |
+| **Tool Architecture** | Chained standalone tools (`Graywolf`, `Qrouter`, `Magic`) | **Cadence Suite** (`Xcelium`, `Genus`, `Conformal LEC`, `Innovus`) | **Unified OpenDB C++ Architecture** (`Yosys`, `OpenROAD`, `KLayout`) | Industry sign-off suite vs. modern open-source zero-conversion database. |
+| **Core Cell Area** | $\approx 50,000 - 120,000\ \mu m^2$ | **$11,260.4\ \mu m^2$** | **$3,920.0\ \mu m^2$** | Dramatic area reduction through standard cell node scaling. |
+| **Gate / Cell Count** | Variable ($\approx 3,000+$) | **1,528 cells** | **2,529 cells** | Technology-dependent mapping and cell drive strength granularity. |
+| **Clock Frequency** | $20 - 50\text{ MHz}$ | **$100\text{ MHz}$ (Slack $+5.53\text{ ns}$)** | **$100\text{ MHz}$ (Slack $+6.08\text{ ns}$, Max $255\text{ MHz}$)** | High timing margin with clean clock tree synthesis across both flows. |
+| **Power Dissipation** | Uncharacterized | **$0.860\text{ mW}$ ($8.595 \times 10^{-4}\text{ W}$)** | Low dynamic/leakage | Rigorous Joules power characterization in Cadence flow. |
+| **Clock Tree Synthesis** | Scripted buffer trees or skipped | **Innovus CTS** (Balanced clock tree) | **TritonCTS** automated H-tree balancing | Strict clock skew and slew minimization. |
+| **Equivalence Checking** | None (Gate simulation only) | **Conformal LEC (PASS, 369/369)** | Formally verified RTL | 100% formal golden vs. gate netlist equivalence in Cadence. |
+| **Physical Sign-Off** | Manual Magic DRC | **Innovus `verifyGeometry` & `verifyConnectivity` (0 Violations)** | **TritonRoute DRC clean (0 Violations)** | Complete DRC & LVS clean sign-off across all metal layers. |
 
 ---
 
